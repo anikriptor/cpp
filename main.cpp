@@ -1,53 +1,51 @@
 #include <iostream>
-#include <vector>
-#include <numeric>
-#include <string>
-#include <memory>
 
-struct Entity {
-    int id;
-    std::string name;
-    float health{100.0f};
+int main() {
 
-    void take_damage(float amount) {
-        health -= amount;
-        std::cout << "[Entity " << name << "] Took " << amount 
-                  << " damage. Remaining HP: " << health << "\n";
-    }
-};
+  std::cout << "Hello Mom!\n";
+    // 1. Definition vs. Assignment
+    int a;         // Default-initialization (contains indeterminate/garbage value)
+    a = 10;        // Copy assignment
 
-int calculate_fibonacci(int n) {
-    if (n <= 1) return n;
-    int a = 0, b = 1;
-    for (int i = 2; i <= n; ++i) {
-        int next = a + b;
-        a = b;
-        b = next;
-    }
-    return b;
-}
+    // 2. Different forms of initialization
+    int b = 5;     // Copy-initialization (inherited from C)
+    int c(6);      // Direct-initialization
 
-int main(int argc, char* argv[]) {
-    std::cout << "=== LLDB & Clang Toolchain Test ===" << "\n";
+    // 3. List/Brace initialization (Preferred in modern C++)
+    int d{7};      // Direct-list-initialization (explicit value)
+    int e = {8};   // Copy-list-initialization
 
-    // 1. Test standard containers and basic arithmetic
-    std::vector<int> numbers = {10, 20, 30, 40, 50};
-    int total_sum = std::accumulate(numbers.begin(), numbers.end(), 0);
-    std::cout << "Sum of vector elements: " << total_sum << "\n";
+    // 4. Value-initialization & Zero-initialization
+    int f{};       // Value-initialization (initializes to 0)
 
-    // 2. Test functions and step-in debugging
-    int fib_input = 7;
-    int fib_result = calculate_fibonacci(fib_input); // <-- Set a breakpoint here to step into
-    std::cout << "Fibonacci(" << fib_input << ") = " << fib_result << "\n";
+    // 5. Narrowing conversions prevention
+    // Brace initialization prevents accidental data loss.
+    // Uncommenting the next line will produce a compiler error:
+    // int narrow{ 4.5 }; 
 
-    // 3. Test pointers, memory, and struct inspection
-    auto player = std::make_unique<Entity>(Entity{1, "PlayerOne", 100.0f});
-    player->take_damage(25.5f);
-    player->take_damage(35.0f); // <-- Set a breakpoint here to inspect `player` struct in debugger
+    // 6. [[maybe_unused]] attribute (C++17)
+    // Silences compiler warnings if a variable is defined but never used
+    [[maybe_unused]] int ignored_val{42};
 
-    std::cout << "Final Player Status: " << player->name 
-              << " | HP: " << player->health << "\n";
+    // Output values to verify initialization
+    std::cout << "Assigned a: " << a << '\n';
+    std::cout << "Copy initialized b: " << b << '\n';
+    std::cout << "Direct initialized c: " << c << '\n';
+    std::cout << "List initialized d: " << d << '\n';
+    std::cout << "Copy-list initialized e: " << e << '\n';
+    std::cout << "Zero-initialized f: " << f << '\n';
 
-    std::cout << "=== All tests completed successfully ===" << "\n";
+    // Input Output
+    std::cout << "Input a number : ";
+    std::cin >> ignored_val;
+    std::cout << "Your value is " << ignored_val << '\n';
+
+
+    // Double input in one line
+    std::cout << "Input two numbers seperated by a space\n";
+    int ab{},cd{};
+    std::cin >> ab >> cd;
+    std::cout << "You entered " << ab << " and " << cd << '\n';
+
     return 0;
 }
