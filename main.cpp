@@ -3,7 +3,7 @@
 int main() {
 
   std::cout << "Hello mom!\n";    //this is a comment
-                    //returns no error
+  int x; //variable
 
   std::cout << -6.7;
   /*
